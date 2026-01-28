@@ -1,0 +1,10 @@
+torch
+transformers
+sentence-transformers
+faiss-cpu
+peft
+bitsandbytes
+nltk
+evaluate
+streamlit
+scikit-learn
