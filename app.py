@@ -7,6 +7,9 @@ import streamlit as st
 
 from rag import load_resources, safe_rag_summarize
 from safety import safety_filter
+from simplify import simplify_text
+safe_summary = simplify_text(safe_summary)
+
 
 st.set_page_config(page_title="SafeRAG Clinical Summarizer", layout="wide")
 
