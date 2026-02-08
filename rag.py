@@ -50,10 +50,23 @@ def safe_rag_summarize(note, index, chunks, embedder, tokenizer, model):
     evidence = retrieve_evidence(note, index, chunks, embedder, k=3)
 
     prompt = f"""
-You are a clinical assistant.
+You are a medical assistant explaining the case to a patient.
 
-Summarize the clinical note using ONLY the evidence provided.
-Do not invent any medical facts.
+Create a patient-friendly explanation in simple language.
+
+Rules:
+- Use simple everyday words.
+- Avoid medical jargon.
+- Explain medical terms if needed.
+- Keep sentences short.
+- Only include important facts.
+- Do not invent medical information.
+
+Return output in this format:
+
+Patient Problem:
+Treatment or Tests:
+Advice for Patient:
 
 NOTE:
 {note}
@@ -61,8 +74,9 @@ NOTE:
 EVIDENCE:
 {evidence}
 
-SUMMARY:
+ANSWER:
 """
+
 
     inputs = tokenizer(prompt, return_tensors="pt", truncation=True, max_length=512)
     outputs = model.generate(**inputs, max_new_tokens=150)
