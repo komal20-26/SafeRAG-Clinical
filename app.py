@@ -4,10 +4,11 @@
 # ----------------------------------
 
 import streamlit as st
+from simplify import simplify_text
+
 
 from rag import load_resources, safe_rag_summarize
 from safety import safety_filter
-from simplify import simplify_text
 safe_summary = simplify_text(safe_summary)
 
 
@@ -36,6 +37,9 @@ if st.button("Generate Safe Summary") and note.strip():
         )
 
         safe_summary, report, dropped = safety_filter(draft_summary, note)
+
+        # simplify medical terms
+        safe_summary = simplify_text(safe_summary)
 
     col1, col2 = st.columns(2)
 
